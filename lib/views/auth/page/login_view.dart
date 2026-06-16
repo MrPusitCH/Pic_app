@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../widget/auth_layout.dart';
+import '../widget/auth_text_field.dart';
+import '../widget/gradient_auth_button.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -18,67 +21,77 @@ class _LoginViewState
       TextEditingController();
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
-      body: Padding(
-        padding:
-            const EdgeInsets.all(20),
-        child: Column(
+    return AuthLayout(
+      title: "Welcome Back",
+      subtitle: "Smart hiring starts with one clean login.",
+      children: [
+        AuthTextField(
+          controller: emailController,
+          label: "Email Address",
+          hintText: "test@test.com",
+          keyboardType: TextInputType.emailAddress,
+        ),
+        const SizedBox(height: 16),
+        AuthTextField(
+          controller: passwordController,
+          label: "Password",
+          hintText: "123456",
+          obscureText: true,
+        ),
+        const SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: () {},
+            child: const Text(
+              "Forgot password?",
+              style: TextStyle(
+                color: Color(0xFF6256F6),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        GradientAuthButton(
+          label: "Sign In",
+          onPressed: () {},
+        ),
+        const SizedBox(height: 22),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-            TextField(
-              controller:
-                  emailController,
-              decoration:
-                  const InputDecoration(
-                labelText: "Email",
+            const Text(
+              "Don't have an account?",
+              style: TextStyle(
+                color: Color(0xFF8E91A7),
+                fontSize: 13,
               ),
             ),
-
-            const SizedBox(
-              height: 16,
-            ),
-
-            TextField(
-              controller:
-                  passwordController,
-              obscureText: true,
-              decoration:
-                  const InputDecoration(
-                labelText: "Password",
-              ),
-            ),
-
-            const SizedBox(
-              height: 24,
-            ),
-
-            ElevatedButton(
-              onPressed: () {
-
-              },
-              child:
-                  const Text("Login"),
-            ),
-
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  "/signup",
-                );
+                Navigator.pushNamed(context, "/signup");
               },
               child: const Text(
-                "Create Account",
+                "Sign up",
+                style: TextStyle(
+                  color: Color(0xFF6256F6),
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 }
